@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "freertos.h": "c",
+    "system_clock.h": "c",
+    "led_task.h": "c",
+    "tasks.h": "c",
+    "stm32f4xx_hal.h": "c",
+    "led.h": "c",
+    "taskledfast.h": "c",
+    "can_min.h": "c"
+  },
+  "cmake.sourceDirectory": "F:/VS Code Projects/FREERTOS_TEST2_STM32F407VG/lib/FreeRTOS-Kernel/include"
+}

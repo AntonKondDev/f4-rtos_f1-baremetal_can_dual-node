@@ -1,0 +1,26 @@
+{
+  "name": "FreeRTOS-Kernel",
+  "version": "10.5.1",
+  "build": {
+    "srcFilter": [
+      "+<croutine.c>",
+      "+<event_groups.c>",
+      "+<list.c>",
+      "+<queue.c>",
+      "+<stream_buffer.c>",
+      "+<tasks.c>",
+      "+<timers.c>",
+      "+<portable/GCC/ARM_CM4F/port.c>",
+      "+<portable/MemMang/heap_4.c>"
+    ],
+    "flags": [
+      "-Iinclude",
+      "-Iportable/GCC/ARM_CM4F",
+      "-mcpu=cortex-m4",
+      "-mthumb",
+      "-mfpu=fpv4-sp-d16",
+      "-mfloat-abi=hard"
+    ],
+    "libArchive": false
+  }
+}
