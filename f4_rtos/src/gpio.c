@@ -3,12 +3,13 @@
 
 void GPIO_Init(void)
 {
+    /* LED: PD12 (RX ok blink), PD13 (TX ok blink), PD14 (ERR) */
     __HAL_RCC_GPIOD_CLK_ENABLE();
-
-    GPIO_InitTypeDef gpio = {0};
-    gpio.Pin   = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14;
-    gpio.Mode  = GPIO_MODE_OUTPUT_PP;
-    gpio.Pull  = GPIO_NOPULL;
-    gpio.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOD, &gpio);
+    GPIO_InitTypeDef g = {0};
+    g.Pin   = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14;
+    g.Mode  = GPIO_MODE_OUTPUT_PP;
+    g.Pull  = GPIO_NOPULL;
+    g.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOD, &g);
 }
+

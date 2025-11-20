@@ -7,7 +7,9 @@
     "stm32f4xx_hal.h": "c",
     "led.h": "c",
     "taskledfast.h": "c",
-    "can_min.h": "c"
+    "can_min.h": "c",
+    "can_drv.h": "c",
+    "app_logic_task.h": "c"
   },
   "cmake.sourceDirectory": "F:/VS Code Projects/FREERTOS_TEST2_STM32F407VG/lib/FreeRTOS-Kernel/include"
 }

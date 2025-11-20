@@ -8,11 +8,11 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/include",
-                "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/src",
-                "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel",
-                "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel/include",
-                "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel/portable/GCC/ARM_CM4F",
+                "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/include",
+                "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/src",
+                "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel",
+                "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel/include",
+                "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel/portable/GCC/ARM_CM4F",
                 "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Include",
                 "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
                 "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/STM32F4xx_HAL_Driver/Inc",
@@ -103,11 +103,11 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/include",
-                    "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/src",
-                    "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel",
-                    "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel/include",
-                    "f:/VS Code Projects/stm32f4_FreeRTOS_CAN_loopback/lib/FreeRTOS-Kernel/portable/GCC/ARM_CM4F",
+                    "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/include",
+                    "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/src",
+                    "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel",
+                    "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel/include",
+                    "f:/VS Code Projects/f4-rtos_f1-baremetal_can_dual-node/f4_rtos/lib/FreeRTOS-Kernel/portable/GCC/ARM_CM4F",
                     "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Include",
                     "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
                     "C:/Users/Tony/.platformio/packages/framework-stm32cubef4/Drivers/STM32F4xx_HAL_Driver/Inc",
