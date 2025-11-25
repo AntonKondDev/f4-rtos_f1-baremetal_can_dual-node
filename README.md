@@ -1,10 +1,6 @@
 # Two-Node CAN Communication  
 STM32F4 (FreeRTOS) ↔ STM32F103 (Bare-metal)  
 
-Проект демонстрирует обмен по шине CAN между двумя микроконтроллерами:  
-- **STM32F407 Discovery (CAN2, FreeRTOS)**  
-- **STM32F103C8T6 Blue Pill (CAN1, bare-metal HAL)**  
-
 ## Проект демонстрирует:  
 - Реальный двунаправленный обмен по CAN (500 кбит/с) между STM32F407 (FreeRTOS) и STM32F103 (bare-metal).
 - Использование STM32 HAL, настройки bit timing под разные APB1.
