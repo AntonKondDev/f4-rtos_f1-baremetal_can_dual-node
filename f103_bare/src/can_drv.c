@@ -1,5 +1,6 @@
 #include "stm32f1xx_hal.h"
 #include "can_drv.h"
+#include "can_types.h"
 
 /* Глобальный дескриптор CAN — виден в других модулях через extern */
 CAN_HandleTypeDef hcan1;
@@ -26,13 +27,7 @@ static void CAN1_GPIO_Init(void)
     HAL_GPIO_Init(GPIOA, &g);
 }
 
-/* Настройка CAN:
- *  - тактирование
- *  - GPIO
- *  - настройки биттайминга на 500 кбит/с
- *  - фильтр “принять всё” в FIFO0
- *  - HAL_CAN_Start()
- */
+// Настройка CAN
 HAL_StatusTypeDef CAN1_Init_500k_Normal(void)
 {
     __HAL_RCC_CAN1_CLK_ENABLE();
@@ -68,58 +63,31 @@ HAL_StatusTypeDef CAN1_Init_500k_Normal(void)
     r = HAL_CAN_ConfigFilter(&hcan1, &f);
     if (r != HAL_OK) return r;
 
-    CAN1->FMR &= ~CAN_FMR_FINIT; (void)CAN1->FMR;
+    r = HAL_CAN_Start(&hcan1);
+    if (r != HAL_OK) return r;
 
-    return HAL_CAN_Start(&hcan1);
+    // включаем прерывание FIFO0
+    HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
+
+    return HAL_OK;
 }
 
-/* Отправка кадра:
- *    — ждём свободный mailbox
- *    — пишем кадр
- *    — ждём до ~2 мс, чтобы mailbox “ушёл” */
-HAL_StatusTypeDef CAN1_Send(const CanFrame_t *f)
+// Отправка кадра
+HAL_StatusTypeDef CAN1_Send(const CanFrame_t *fr)
 {
     CAN_TxHeaderTypeDef tx = {0};
     tx.IDE  = CAN_ID_STD;
-    tx.StdId= f->id & 0x7FF;
+    tx.StdId = fr->id & 0x7FF;
     tx.RTR  = CAN_RTR_DATA;
-    tx.DLC  = f->dlc;
-
-    while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan1) == 0) { 
-      /* ждём свободный mailbox */ 
-    }
+    tx.DLC  = fr->dlc;
 
     uint32_t mb;
-    HAL_StatusTypeDef st = HAL_CAN_AddTxMessage(&hcan1, &tx, (uint8_t*)f->data, &mb);
-    if (st != HAL_OK) return st;
-
-    // короткое ожидание, чтобы не забивать три mailbox подряд
-    uint32_t t0 = HAL_GetTick();
-    while (HAL_CAN_IsTxMessagePending(&hcan1, mb) && (HAL_GetTick() - t0 < 2)) { 
-      /* wait */ 
-    }
-
-    return HAL_OK;
+    return HAL_CAN_AddTxMessage(&hcan1, &tx, (uint8_t*)fr->data, &mb);
 }
 
-/* Есть ли в FIFO0 кадры? */
-int CAN1_RxAvail(void)
+void USB_LP_CAN1_RX0_IRQHandler(void)
 {
-    return (HAL_CAN_GetRxFifoFillLevel(&hcan1, CAN_RX_FIFO0) > 0);
-}
-
-/* Считать один кадр из FIFO0 */
-HAL_StatusTypeDef CAN1_Recv(CanFrame_t *f)
-{
-    CAN_RxHeaderTypeDef rx;
-    uint8_t data[8];
-
-    HAL_StatusTypeDef st = HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx, data);
-    if (st != HAL_OK) return st;
-
-    f->id  = (rx.IDE == CAN_ID_STD) ? rx.StdId : 0;
-    f->dlc = rx.DLC;
-    for (uint8_t i = 0; i < rx.DLC; ++i) f->data[i] = data[i];
-
-    return HAL_OK;
+    HAL_CAN_IRQHandler(&hcan1);
 }

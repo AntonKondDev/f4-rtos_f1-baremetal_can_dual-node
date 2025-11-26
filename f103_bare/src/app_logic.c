@@ -4,42 +4,51 @@
 #include "app_logic.h"
 #include "can_types.h"
 
+volatile uint8_t led_flag = 0;
+
 void App_Init(void)
 {
     GPIO_Init();    // PC13 как LED
     if (CAN1_Init_500k_Normal() != HAL_OK) {
-                    // аварийная индикация
         while (1) {
-            LED_On();
-            HAL_Delay(100);
-            LED_Off();
-            HAL_Delay(100);
+            LED_Blink(200); // аварийная индикация
         }
     }
 }
 
-void App_Poll(void)
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-                     // Проверим есть ли кадры в FIFO0
-    while (CAN1_RxAvail())
-    {
-        CanFrame_t rx;
-        if (CAN1_Recv(&rx) == HAL_OK)
-        {
-                     // PING 0x100 -> PONG 0x101
-            if (rx.id == 0x100 && rx.dlc > 0)
-            {
-                LED_On();
-                HAL_Delay(10);
-                LED_Off();
+    CAN_RxHeaderTypeDef rx;
+    uint8_t data[8];
 
-                CanFrame_t tx = {
-                    .id   = 0x101,
-                    .dlc  = 1,
-                    .data = { rx.data[0] }
-                };
-                (void)CAN1_Send(&tx);
-            }
-        }
+    if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx, data) != HAL_OK) {
+        return;
     }
+
+    CanFrame_t f = {0};
+    f.id  = (rx.IDE == CAN_ID_STD) ? rx.StdId : rx.ExtId;
+    f.dlc = rx.DLC;
+    for (uint8_t i = 0; i < f.dlc && i < 8; ++i) {
+        f.data[i] = data[i];
+    }
+
+    // Логика уровня приложения: PING → мигаем → PONG
+    if (f.id == 0x100 && f.dlc > 0) {
+        CanFrame_t pong = {0};
+        pong.id     = 0x101;
+        pong.dlc    = 1;
+        pong.data[0]= f.data[0];
+
+        (void)CAN1_Send(&pong);
+    }
+    
+    led_flag = 1; 
+}
+
+void App_Process(void)
+{
+  if (led_flag) {
+      led_flag = 0;
+      LED_Blink(10);
+  }
 }
