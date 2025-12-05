@@ -194,7 +194,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 ### 7.1. Необходимые инструменты  
 **Минимальный набор:**
 - [Visual Studio Code](https://code.visualstudio.com/)
-- Расширение **PlatformIO IDE** для VS Code
+- Расширение **PlatformIO** для VS Code
 - **Git for Windows** — даёт:
   - консоль `git`,
   - удобный терминал **Git Bash** с POSIX-командами (`ls`, `rm`, `make` и т.п.).
@@ -207,7 +207,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 **Hardware:**
 - Платы **STM32F407 Discovery** и **STM32F103C8 (Blue Pill)**.
 - Программатор **ST-LINK** (для F1, F4 уже имеет встроенный ST-LINK).
-- Внешний блок питания **5 В** (желательно питать обе платы от общего источника).
+- Внешний **блок питания 5В** (желательно питать обе платы от общего источника).
 - Понижающий DC-DC преобразователь (5в - 3.3в), для питания трансиверов.
 - Один или два резистора **120 Ω** для терминаторов линии CAN (если не встроены в трансивер).
 
