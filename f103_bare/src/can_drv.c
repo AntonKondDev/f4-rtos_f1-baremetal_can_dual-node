@@ -87,6 +87,7 @@ HAL_StatusTypeDef CAN1_Send(const CanFrame_t *fr)
     return HAL_CAN_AddTxMessage(&hcan1, &tx, (uint8_t*)fr->data, &mb);
 }
 
+//ISR-обработчик
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
     HAL_CAN_IRQHandler(&hcan1);

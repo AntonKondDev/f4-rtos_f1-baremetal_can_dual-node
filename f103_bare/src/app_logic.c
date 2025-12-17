@@ -32,7 +32,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
         f.data[i] = data[i];
     }
 
-    // Логика уровня приложения: PING → мигаем → PONG
+    // Логика уровня приложения: PING → PONG → LED_Blink
     if (f.id == 0x100 && f.dlc > 0) {
         CanFrame_t pong = {0};
         pong.id     = 0x101;
